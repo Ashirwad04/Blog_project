@@ -1,44 +1,24 @@
 package com.blog.project.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
+import java.util.List;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Category {
 
     @Id
     private String categoryId;
     private String categoryTitle;
     private String categoryDescription;
+    private List<Post> posts;
 
-    //no args constructor
-    public Category() { }
-    //all args constructor
-    public Category(String categoryId, String categoryTitle, String categoryDescription) {
-        this.categoryId = categoryId;
-        this.categoryTitle = categoryTitle;
-        this.categoryDescription = categoryDescription;
-    }
-
-    public String getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getCategoryTitle() {
-        return categoryTitle;
-    }
-
-    public void setCategoryTitle(String categoryTitle) {
-        this.categoryTitle = categoryTitle;
-    }
-
-    public String getCategoryDescription() {
-        return categoryDescription;
-    }
-
-    public void setCategoryDescription(String categoryDescription) {
-        this.categoryDescription = categoryDescription;
-    }
 }

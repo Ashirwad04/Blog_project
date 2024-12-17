@@ -1,5 +1,6 @@
 package com.blog.project.model;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,25 +8,27 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-import java.util.List;
-
-
+import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class User {
+public class Post {
 
     @Id
-    private String id;
-    private String name;
-    private String email;
-    private String password;
-    private String about;
+    private String postId;
+    private String title;
+    private String content;
+    private String image;
+    private Date addedDate;
 
 
-    private List<Post> posts;
+    //mapped
 
+    private User user;
+
+
+    private Category category;
 
 
 }
