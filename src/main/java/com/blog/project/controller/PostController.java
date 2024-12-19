@@ -36,9 +36,13 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity<PostResponse> getAllPosts(
             @RequestParam(value = "pageNumber",defaultValue ="0",required = false)Integer pageNumber,
-            @RequestParam(value = "pageSize",defaultValue ="5",required = false)Integer pageSize
+            @RequestParam(value = "pageSize",defaultValue ="5",required = false)Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue ="id",required = false)String sortBy,
+           @RequestParam(value = "sortOrder", defaultValue ="asc",required = false)String sortOrder
+           // @RequestParam(value = "search", defaultValue ="",required = false)String searchText,
+           // @RequestParam(value = "dateRange", defaultValue ="",required = false)String dateRange,
             ){
-        PostResponse postResponse = this.postService.getAllPosts(pageNumber,pageSize);
+        PostResponse postResponse = this.postService.getAllPosts(pageNumber,pageSize,sortBy,sortOrder);
         return new ResponseEntity<PostResponse>(postResponse, HttpStatus.OK);
     }
 
@@ -81,5 +85,15 @@ public class PostController {
         List<PostDto> postsByUser = this.postService.getPostsByCategory(categoryId);
         return new ResponseEntity<List<PostDto>>(postsByUser,HttpStatus.OK);
     }
+
+
+    //search
+    @GetMapping("/posts/search/{keywords}")
+    public ResponseEntity<List<PostDto>> searchPostsByTitle(@PathVariable String keywords) {
+        List<PostDto> postDtos = this.postService.searchPosts(keywords);
+        return new ResponseEntity<List<PostDto>>(postDtos, HttpStatus.OK);
+    }
+
+
 
 }

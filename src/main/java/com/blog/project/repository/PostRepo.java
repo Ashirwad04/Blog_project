@@ -13,4 +13,6 @@ public interface PostRepo extends MongoRepository<Post,String> {
     List<Post> findByCategory(Category cat);
 
     List<Post> findByUser(User user);
+
+    List<Post> findByTitleContainingIgnoreCase(String title);
 }

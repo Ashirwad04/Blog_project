@@ -13,11 +13,13 @@ public interface PostService {
     PostDto getPostById(String postId);
     void deletePost(String postId);
 
-    PostResponse getAllPosts(Integer pageNumber, Integer pageSize);
+    PostResponse getAllPosts(Integer pageNumber, Integer pageSize,String sortBy,String sortOrder);
     List<PostDto> getPostsByCategory(String categoryId);
     List<PostDto> getPostsByUser(String userId);
-
+//search
     List<PostDto> searchPosts(String keyword);
+
+
 
 
 
