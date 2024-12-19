@@ -5,13 +5,21 @@ import com.blog.project.model.Category;
 import com.blog.project.model.Post;
 import com.blog.project.model.User;
 import com.blog.project.payload.PostDto;
+import com.blog.project.payload.PostResponse;
 import com.blog.project.repository.CategoryRepo;
 import com.blog.project.repository.PostRepo;
 import com.blog.project.repository.UserRepo;
 import com.blog.project.service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+
+
 
 import java.util.Date;
 import java.util.List;
@@ -71,10 +79,22 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts() {
-        List<Post> allPosts = this.postRepo.findAll();
+    public PostResponse getAllPosts(Integer pageNumber, Integer pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Post> pagePost = this.postRepo.findAll(pageable); // Retrieve paginated results
+        List<Post> allPosts = pagePost.getContent(); // Get content from the Page object
         List<PostDto> postDtos = allPosts.stream().map((post) -> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
-        return postDtos;
+
+        PostResponse postResponse=new PostResponse();
+        postResponse.setContent(postDtos);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalElements(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+
+        return postResponse;
     }
 
     @Override
